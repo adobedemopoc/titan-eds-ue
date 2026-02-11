@@ -1,0 +1,118 @@
+[
+  {
+    "id": "main",
+    "components": [
+      "section"
+    ]
+  },
+  {
+    "id": "section",
+    "components": [
+      "button",
+      "action-button",
+      "cards",
+      "carousel",
+      "columns",
+      "contentfragment",
+      "button",
+      "dm-asset",
+      "dm-template",
+      "fragment",
+      "hero",
+      "image",
+      "teaser",
+      "text",
+      "title",
+      "quote",
+      "tabs",
+      "pdp",
+      "pdp-titanedge",
+      "products-list",
+      "videocarousel",
+      "video",
+      "search",
+      "separator",
+      "form",
+      "forex",
+      "accordion",
+      "embed-adaptive-form",
+      "find-a-doctor"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
+    ]
+  },
+  {
+    "id": "cards",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "columns",
+    "components": [
+      "column"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tabs-item"
+    ]
+  },
+  {
+    "id": "column",
+    "components": [
+      "video",
+      "title",
+      "text",
+      "image",
+      "quote"
+    ]
+  },
+  {
+    "id": "videocarousel",
+    "components": [
+      "videocarousel-item"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "captcha",
+      "checkbox",
+      "checkbox-group",
+      "date-input",
+      "drop-down",
+      "email",
+      "file-input",
+      "form-accordion",
+      "form-button",
+      "form-fragment",
+      "form-image",
+      "form-modal",
+      "form-reset-button",
+      "form-submit-button",
+      "number-input",
+      "panel",
+      "password",
+      "plain-text",
+      "radio-group",
+      "rating",
+      "telephone-input",
+      "text-input",
+      "tnc",
+      "wizard",
+      "range"
+    ]
+  }
+]
