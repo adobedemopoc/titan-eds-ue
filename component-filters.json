@@ -16,6 +16,8 @@
       "contentfragment",
       "button",
       "dm-asset",
+      "dynamic-media-image",
+      "dynamic-media-video",
       "dm-template",
       "fragment",
       "hero",
