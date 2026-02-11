@@ -65,7 +65,7 @@
 }
 
 .hero img {
-  object-fit:contain;
+  object-fit:inherit;
   object-position: center;
   width: 100%;
   height: 100%;
@@ -168,7 +168,9 @@
 .hero.image-bottom {
   flex-direction: column-reverse;
 }
-
+.hero{
+  min-height: 500px;
+}
 /* Image Background Text Left - Text overlaid on background image, left-aligned */
 .hero.image-background-text-left {
   justify-content: flex-start;
