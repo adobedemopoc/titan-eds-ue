@@ -512,5 +512,5 @@ picture {
 .hero.block.overlay.default{
   background-size: contain;
   background-repeat: no-repeat;
-  min-height: 180px;
+  min-height: 500px;
 }
