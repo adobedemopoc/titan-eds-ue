@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p121857-e1908603.adobeaemcloud.com/bin/franklin.delivery/vrushalipistulkar/titan-eds-ue-demo/main"
+    url: "https://author-p121857-e1908603.adobeaemcloud.com/bin/franklin.delivery/adobedemopoc/titan-eds-ue/main"
     type: "markup"
     suffix: ".html"
