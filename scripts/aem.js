@@ -912,7 +912,6 @@ export {
   loadHeader,
   loadScript,
   loadSection,
-  setImageDimensions,
   loadSections,
   updateSectionsStatus,
   readBlockConfig,
