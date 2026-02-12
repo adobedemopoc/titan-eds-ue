@@ -31,6 +31,9 @@
   object-fit: cover;
   object-position: center;
   max-height: 500px;
+  /* Prevent CLS by maintaining aspect ratio - set via JavaScript */
+  width: 100%;
+  height: auto;
 }
 
 .columns .columns-video-col {

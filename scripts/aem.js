@@ -301,6 +301,9 @@ function getMetadata(name, doc = document) {
  * @param {string} [alt] The image alternative text
  * @param {boolean} [eager] Set loading attribute to eager
  * @param {Array} [breakpoints] Breakpoints and corresponding params (eg. width)
+ * @param {string} [fetchpriority] Fetch priority for the image
+ * @param {number} [width] Image width for aspect ratio calculation
+ * @param {number} [height] Image height for aspect ratio calculation
  * @returns {Element} The picture element
  */
 function createOptimizedPicture(
@@ -309,6 +312,8 @@ function createOptimizedPicture(
   eager = false,
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
   fetchpriority = null,
+  width = null,
+  height = null,
 ) {
   const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
@@ -338,12 +343,90 @@ function createOptimizedPicture(
         img.setAttribute('fetchpriority', fetchpriority || 'high');
       }
       img.setAttribute('alt', alt);
+      
+      // Set width and height attributes to prevent CLS
+      if (width && height) {
+        img.setAttribute('width', width.toString());
+        img.setAttribute('height', height.toString());
+        // Use CSS aspect-ratio for responsive behavior
+        img.style.aspectRatio = `${width} / ${height}`;
+        img.style.width = '100%';
+        img.style.height = 'auto';
+      }
+      
       picture.appendChild(img);
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=high`);
     }
   });
 
   return picture;
+}
+
+/**
+ * Sets width and height attributes on images to prevent CLS
+ * Uses natural dimensions when available, otherwise sets dimensions after image loads
+ * @param {HTMLElement} img The image element
+ * @param {number} [defaultWidth] Default width if not available
+ * @param {number} [defaultHeight] Default height if not available
+ */
+export function setImageDimensions(img, defaultWidth = null, defaultHeight = null) {
+  // If image already has dimensions, use them
+  if (img.hasAttribute('width') && img.hasAttribute('height')) {
+    const width = parseInt(img.getAttribute('width'), 10);
+    const height = parseInt(img.getAttribute('height'), 10);
+    if (width && height) {
+      img.style.aspectRatio = `${width} / ${height}`;
+      img.style.width = '100%';
+      img.style.height = 'auto';
+      return;
+    }
+  }
+
+  // If image is already loaded, use natural dimensions
+  if (img.complete && img.naturalWidth && img.naturalHeight) {
+    img.setAttribute('width', img.naturalWidth.toString());
+    img.setAttribute('height', img.naturalHeight.toString());
+    img.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+    img.style.width = '100%';
+    img.style.height = 'auto';
+    return;
+  }
+
+  // Use default dimensions if provided
+  if (defaultWidth && defaultHeight) {
+    img.setAttribute('width', defaultWidth.toString());
+    img.setAttribute('height', defaultHeight.toString());
+    img.style.aspectRatio = `${defaultWidth} / ${defaultHeight}`;
+    img.style.width = '100%';
+    img.style.height = 'auto';
+  }
+
+  // Set dimensions after image loads
+  const setDimensions = () => {
+    if (img.naturalWidth && img.naturalHeight) {
+      img.setAttribute('width', img.naturalWidth.toString());
+      img.setAttribute('height', img.naturalHeight.toString());
+      img.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+      img.style.width = '100%';
+      img.style.height = 'auto';
+    }
+  };
+
+  if (img.complete) {
+    setDimensions();
+  } else {
+    img.addEventListener('load', setDimensions, { once: true });
+    img.addEventListener('error', () => {
+      // If image fails to load and we have defaults, use them
+      if (defaultWidth && defaultHeight) {
+        img.setAttribute('width', defaultWidth.toString());
+        img.setAttribute('height', defaultHeight.toString());
+        img.style.aspectRatio = `${defaultWidth} / ${defaultHeight}`;
+        img.style.width = '100%';
+        img.style.height = 'auto';
+      }
+    }, { once: true });
+  }
 }
 
 /**
@@ -829,6 +912,7 @@ export {
   loadHeader,
   loadScript,
   loadSection,
+  setImageDimensions,
   loadSections,
   updateSectionsStatus,
   readBlockConfig,

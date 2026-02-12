@@ -66,6 +66,8 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
   }
 };
 
+import { setImageDimensions } from '../../scripts/aem.js';
+
 function isVideoLink(link) {
     try {
         if (!link) return false;
@@ -114,6 +116,12 @@ export default function decorate(block) {
         if (picWrapper && picWrapper.children.length === 1) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
+          
+          // Set dimensions on image to prevent CLS
+          const img = pic.querySelector('img');
+          if (img) {
+            setImageDimensions(img);
+          }
         }
       }
      // const videoBlock = col.querySelector('div[data-aue-model="video"]');

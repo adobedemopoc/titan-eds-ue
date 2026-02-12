@@ -15,7 +15,8 @@ import {
   getMetadata,
   loadScript,
   toClassName,
-  toCamelCase
+  toCamelCase,
+  setImageDimensions
 } from './aem.js';
 import { picture, source, img } from './dom-helpers.js';
 
@@ -314,6 +315,12 @@ async function loadLazy(doc) {
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
   await showExperimentationRail(doc, experimentationConfig);
+  
+  // Set dimensions on logo to prevent CLS
+  const logoImg = doc.querySelector('.nav-brand img');
+  if (logoImg) {
+    setImageDimensions(logoImg, 124, 22); // Default logo dimensions from CSS
+  }
 }
 
 
@@ -562,6 +569,9 @@ export async function decorateDMImages(main) {
   
 	  pic.appendChild(img);
 	  dmOpenApiDiv.appendChild(pic);
+	  
+	  // Set dimensions on image to prevent CLS
+	  setImageDimensions(img);
 	}
 	/*
 	const allBlocks = Array.from(main.querySelectorAll('.dm-openapi, .dynamic-media-image'));
