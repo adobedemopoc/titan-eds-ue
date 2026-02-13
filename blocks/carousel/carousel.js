@@ -249,19 +249,26 @@ export default function decorate(block) {
   });
 
   slider.querySelectorAll('picture > img').forEach((img, index) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-      { media: '(min-width: 1024px)', width: '2000' },
-      { media: '(min-width: 768px)', width: '1400' },
-      { width: '1000' }
-    ]);
+    // Check if this image is in the active slide
+    const isActiveSlide = img.closest('li')?.classList.contains('active');
+    const isFirstImage = index === 0;
     
-    // Optimize LCP: First image should be eagerly loaded with high priority
+    // Optimize LCP: First image or active slide image should be eagerly loaded with high priority
+    const shouldEagerLoad = isFirstImage || isActiveSlide;
+    
+    const optimizedPic = createOptimizedPicture(
+      img.src, 
+      img.alt, 
+      shouldEagerLoad, // Pass eager flag directly
+      [
+        { media: '(min-width: 1024px)', width: '2000' },
+        { media: '(min-width: 768px)', width: '1400' },
+        { width: '1000' }
+      ],
+      shouldEagerLoad ? 'high' : null // Pass fetchpriority directly
+    );
+    
     const optimizedImg = optimizedPic.querySelector('img');
-    if (index === 0) {
-      optimizedImg.setAttribute('loading', 'eager');
-      optimizedImg.setAttribute('fetchpriority', 'high');
-    }
-    
     moveInstrumentation(img, optimizedImg);
     img.closest('picture').replaceWith(optimizedPic);
   });
