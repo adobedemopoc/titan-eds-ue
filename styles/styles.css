@@ -882,6 +882,9 @@ main .section.bg-image > .default-content-wrapper {
     --spacing-large: 1.5rem;
     --spacing-xlarge: 2rem;
   }
+  .columns-video-container {
+    display: none;
+  }
 
 }
 
