@@ -742,7 +742,7 @@
     object-fit: cover;
     
     object-position: left;
-    object-position: 21%;
+   /* object-position: 21%;*/
   }
   .carousel-container .carousel-wrapper .carousel.single-slide-carousel-wrapper, .carousel-container .carousel-wrapper .carousel > ul.single-slide-carousel {
     min-height: min(25rem, calc(100svh - var(--nav-height)));
